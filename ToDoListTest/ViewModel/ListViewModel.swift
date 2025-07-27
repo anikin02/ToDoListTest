@@ -40,7 +40,7 @@ class ListViewModel: ObservableObject {
   }
   
   func addTask(item: TodoItem) {
-    tasks.append(item)
+    tasks.insert(item, at: 0)
   }
   
   func removeTask(item: TodoItem) {

@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct FooterView: View {
-  let count: Int
+  @EnvironmentObject var viewModel: ListViewModel
+  
   var body: some View {
     ZStack {
-      Text(getStringCount())
+      Text(getStringCount(count: viewModel.filteredTasks.count))
         .font(.system(size: 18, weight: .regular))
         .foregroundStyle(.white)
       
       HStack {
         Spacer()
         
-        Button {
+        NavigationLink {
+          EditView()
+            .environmentObject(viewModel)
         } label: {
           Image(systemName: "square.and.pencil")
             .resizable()
@@ -32,7 +35,7 @@ struct FooterView: View {
     .background(.FOOTERCOLOR)
   }
   
-  func getStringCount() -> String {
+  func getStringCount(count: Int) -> String {
     switch count {
     case 1:
       return "1 Задача"

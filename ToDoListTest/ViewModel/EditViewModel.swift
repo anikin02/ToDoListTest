@@ -1,25 +1,25 @@
 //
-//  TodoItem.swift
+//  EditViewModel.swift
 //  ToDoListTest
 //
 //  Created by Данил Аникин on 27.07.2025.
 //
 
-import Foundation
+import SwiftUI
 
-struct TodoItem: Hashable {
-  let id = UUID()
-  var todo: String
-  var description: String
-  var completed: Bool
-  let date: String
+class EditViewModel: ObservableObject {
+  @Published var todo: String = ""
+  @Published var description: String = ""
+  @Published var date: String = ""
   
-  init(todo: String, description: String = "", completed: Bool = false, date: String? = nil) {
-    self.todo = todo
-    self.description = description
-    self.completed = completed
+  var item: TodoItem?
+  
+  init(item: TodoItem? = nil) {
+    self.item = item
     
-    if let date = date {
+    self.todo = item?.todo ?? ""
+    self.description = item?.description ?? ""
+    if let date = item?.date {
       self.date = date
     } else {
       let currentDate = Date()
@@ -31,6 +31,5 @@ struct TodoItem: Hashable {
       let formattedDate = formatter.string(from: currentDate)
       self.date = formattedDate
     }
-    
   }
 }

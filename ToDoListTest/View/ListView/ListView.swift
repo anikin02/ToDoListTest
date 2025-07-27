@@ -15,8 +15,13 @@ struct ListView: View {
     VStack {
       ScrollView {
         ForEach(viewModel.filteredTasks, id: \.self) { item in
-          ItemListView(item: item)
-            .environmentObject(viewModel)
+          NavigationLink {
+            EditView(item: item)
+              .environmentObject(viewModel)
+          } label: {
+            ItemListView(item: item)
+              .environmentObject(viewModel)
+          }
           Divider()
         }
       }
@@ -25,7 +30,8 @@ struct ListView: View {
       .scrollIndicators(.hidden)
       .searchable(text: $viewModel.searchText)
       
-      FooterView(count: 7)
+      FooterView()
+        .environmentObject(viewModel)
     }
   }
 }
