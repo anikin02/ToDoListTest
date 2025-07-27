@@ -14,7 +14,10 @@ struct ListView: View {
   var body: some View {
     VStack {
       ScrollView {
-        
+        ItemListView()
+        ItemListView()
+        ItemListView()
+        ItemListView()
       }
       .frame(maxWidth: .infinity)
       
