@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ItemListView: View {
+  @EnvironmentObject var viewModel: ListViewModel
+  
   let item: TodoItem
   var body: some View {
     HStack(alignment: .top) {
       HStack {
-        Image(systemName: item.completed ? "checkmark.circle" : "circle")
-          .resizable()
-          .frame(width: 24, height: 24)
-          .foregroundStyle(item.completed ? .YELLOW : .GRAY)
+        Button {
+          viewModel.changeCompletedTask(item: item)
+        } label: {
+          Image(systemName: item.completed ? "checkmark.circle" : "circle")
+            .resizable()
+            .frame(width: 24, height: 24)
+            .foregroundStyle(item.completed ? .YELLOW : .GRAY)
+        }
       }
       VStack(alignment: .leading) {
         Text(item.todo)

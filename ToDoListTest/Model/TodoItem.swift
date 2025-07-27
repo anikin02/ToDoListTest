@@ -7,10 +7,11 @@
 
 import Foundation
 
-struct TodoItem {
-  let todo: String
-  let description: String
-  let completed: Bool
+struct TodoItem: Hashable {
+  let id = UUID()
+  var todo: String
+  var description: String
+  var completed: Bool
   let date: String
   
   init(todo: String, description: String = "", completed: Bool = false, date: String? = nil) {
