@@ -34,6 +34,10 @@ class ListViewModel: ObservableObject {
     loadTasks()
   }
   
+  init(container: NSPersistentContainer) {
+    self.container = container
+  }
+  
   func fetchTasks() {
     let request = NSFetchRequest<TodoItem>(entityName: "TodoItem")
     
@@ -59,7 +63,7 @@ class ListViewModel: ObservableObject {
       fetchTasks()
     }
     
-    filteredTasks = tasks
+    filterTasks()
   }
   
   func addTask(todo: String, details: String, complited: Bool = false) {
@@ -119,7 +123,7 @@ class ListViewModel: ObservableObject {
   func filterTasks() {
     DispatchQueue.main.async {
       if self.searchText.isEmpty {
-        self.filteredTasks = self.tasks
+        self.filteredTasks = self.tasks.reversed()
       } else {
         self.filteredTasks = self.tasks.filter { $0.todo!.lowercased().contains(self.searchText.lowercased()) }
       }
