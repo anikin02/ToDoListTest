@@ -24,16 +24,17 @@ struct ItemListView: View {
         }
       }
       VStack(alignment: .leading) {
-        Text(item.todo)
+        Text(item.todo ?? "Wait pls")
           .font(.system(size: 22, weight: .medium))
           .foregroundStyle(item.completed ? .GRAY : .TEXTCOLOR)
           .lineLimit(1)
           .strikethrough(item.completed, color: .GRAY)
-        Text(item.description)
+        Text(item.details ?? "Wait pls")
           .lineLimit(2)
+          .multilineTextAlignment(.leading)
           .font(.system(size: 16, weight: .regular))
           .foregroundStyle(item.completed ? .GRAY : .TEXTCOLOR)
-        Text(item.date)
+        Text(item.date ?? "Wait pls")
           .foregroundStyle(.GRAY)
           .font(.system(size: 16, weight: .regular))
       }

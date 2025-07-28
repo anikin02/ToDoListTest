@@ -9,7 +9,7 @@ import SwiftUI
 
 class EditViewModel: ObservableObject {
   @Published var todo: String = ""
-  @Published var description: String = ""
+  @Published var details: String = ""
   @Published var date: String = ""
   
   var item: TodoItem?
@@ -18,7 +18,7 @@ class EditViewModel: ObservableObject {
     self.item = item
     
     self.todo = item?.todo ?? ""
-    self.description = item?.description ?? ""
+    self.details = item?.details ?? ""
     if let date = item?.date {
       self.date = date
     } else {

@@ -25,16 +25,16 @@ struct EditView: View {
         .foregroundStyle(.GRAY)
       VStack {
         ZStack(alignment: .topLeading) {
-            if editViewModel.description.isEmpty {
-                Text("Введите описание")
-                    .font(.system(size: 20, weight: .regular))
-                    .foregroundStyle(.gray)
-            }
-            
-            TextEditor(text: $editViewModel.description)
-                .font(.system(size: 20, weight: .regular))
-                .foregroundStyle(.TEXTCOLOR)
-                .opacity(editViewModel.description.isEmpty ? 0.25 : 1)
+          if editViewModel.details.isEmpty {
+            Text("Введите описание")
+              .font(.system(size: 20, weight: .regular))
+              .foregroundStyle(.gray)
+          }
+          
+          TextEditor(text: $editViewModel.details)
+            .font(.system(size: 20, weight: .regular))
+            .foregroundStyle(.TEXTCOLOR)
+            .opacity(editViewModel.details.isEmpty ? 0.25 : 1)
         }
       }
     }
@@ -47,12 +47,12 @@ struct EditView: View {
           if let item = editViewModel.item {
             listViewModel.changeTask(item: item,
                                      todo: editViewModel.todo,
-                                     description: editViewModel.description)
+                                     details: editViewModel.details)
           } else if !editViewModel.todo.isEmpty {
-            listViewModel.addTask(item: TodoItem(
+            listViewModel.addTask(
               todo: editViewModel.todo,
-              description: editViewModel.description
-            ))
+              details: editViewModel.details
+            )
           }
           dismiss()
         } label: {
