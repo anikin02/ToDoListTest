@@ -25,48 +25,60 @@ class ListViewModel: ObservableObject {
   }
   
   func loadTasks() {
-    tasks = [
-      TodoItem(todo: "Название", description: "описвание задачи", completed: true),
-      TodoItem(todo: "Название", description: "описвание задачи", completed: false),
-      TodoItem(todo: "Привет", description: "описвание задачи", completed: false),
-      TodoItem(todo: "Название", description: "описвание задачи", completed: true),
-      TodoItem(todo: "Пока", description: "описвание задачи", completed: false),
-      TodoItem(todo: "Название", description: "описвание задачи", completed: true),
-      TodoItem(todo: "Почему", description: "описвание задачи", completed: false),
-      TodoItem(todo: "Название", description: "описвание задачи", completed: true)
-    ]
+    if UserDefaults.standard.bool(forKey: "hasLaunchedBefore") == false {
+      DispatchQueue.main.async {
+        APIManager.shared.getTodos { [weak self] items in
+          for item in items.todos {
+            self?.tasks.insert(TodoItem(todo: item.todo, description: item.todo, completed: item.completed), at: 0)
+          }
+        }
+      }
+      //UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
+    } else {
+      // CORE DATA
+    }
     
     filteredTasks = tasks
   }
   
   func addTask(item: TodoItem) {
-    tasks.insert(item, at: 0)
+    DispatchQueue.main.async {
+      self.tasks.insert(item, at: 0)
+    }
   }
   
   func removeTask(item: TodoItem) {
-    if let index = tasks.firstIndex(of: item) {
-      tasks.remove(at: index)
+    DispatchQueue.main.async {
+      if let index = self.tasks.firstIndex(of: item) {
+        self.tasks.remove(at: index)
+      }
     }
   }
   
   func changeTask(item: TodoItem, todo: String, description: String) {
-    if let index = tasks.firstIndex(of: item) {
-      tasks[index].todo = todo
-      tasks[index].description = description
+    DispatchQueue.main.async {
+      if let index = self.tasks.firstIndex(of: item) {
+        self.tasks[index].todo = todo
+        self.tasks[index].description = description
+      }
     }
   }
   
   func changeCompletedTask(item: TodoItem) {
-    if let index = tasks.firstIndex(of: item) {
-      tasks[index].completed.toggle()
+    DispatchQueue.main.async {
+      if let index = self.tasks.firstIndex(of: item) {
+        self.tasks[index].completed.toggle()
+      }
     }
   }
   
   func filterTasks() {
-    if searchText.isEmpty {
-      filteredTasks = tasks
-    } else {
-      filteredTasks = tasks.filter { $0.todo.lowercased().contains(searchText.lowercased()) }
+    DispatchQueue.main.async {
+      if self.searchText.isEmpty {
+        self.filteredTasks = self.tasks
+      } else {
+        self.filteredTasks = self.tasks.filter { $0.todo.lowercased().contains(self.searchText.lowercased()) }
+      }
     }
   }
   
