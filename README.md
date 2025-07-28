@@ -48,7 +48,7 @@ ToDoListTest — это простое мобильное приложение �
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/your-username/ToDoListTest.git
+   git clone https://github.com/anikin02/ToDoListTest.git
     ```
 
 2. Откройте проект в Xcode (версии **15.2** или новее)
